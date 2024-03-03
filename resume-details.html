@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Details</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease forwards;
+            position: relative; /* Added position relative */
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            text-align: left;
+            color: #333;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        h1 {
+            text-align: center;
+            color: black;
+            text-decoration: underline;
+            padding-bottom: 40px;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        p, ul, table {
+            margin-bottom: 15px;
+        }
+
+        th, td {
+            padding: 8px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f0f0f0;
+        }
+
+        .passport-photo {
+            max-width: 200px;
+            display: block;
+            margin: 20px auto;
+            position: absolute;
+            top: 120px;
+            right: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="" alt="Passport Size Photo" id="passportPhoto" class="passport-photo">
+        <h1>Resume Details</h1>
+        <div id="resumeDetails"></div>
+    </div>
+    <br>
+    <br>
+
+ <script>
+        window.onload = function() {
+            const resumeDetails = JSON.parse(localStorage.getItem('resumeDetails'));
+            if (resumeDetails) {
+                const resumeDetailsContainer = document.getElementById('resumeDetails');
+                const educationHTML = resumeDetails.educationHTML;
+                const technicalSkillsHTML = resumeDetails.technicalSkillsHTML;
+                const projectDetailsHTML = resumeDetails.projectDetailsHTML;
+
+                let resumeHTML = `<h2>Name: ${resumeDetails.fullName}</h2>`;
+                resumeHTML += `<h3>Email: ${resumeDetails.email}</h3>`;
+                resumeHTML += `<h3>Phone: ${resumeDetails.phone}</h3>`;
+                resumeHTML += `<h3>Career Objective: ${resumeDetails.careerObjective}</h3>`;
+                resumeHTML += `<h3>Experience: ${resumeDetails.experience}</h3>`;
+                resumeHTML += educationHTML;
+                resumeHTML += technicalSkillsHTML;
+                resumeHTML += projectDetailsHTML;
+                resumeHTML += `<h3>Personal Details: ${resumeDetails.personalDetails}</h3>`;
+                // Add social media links
+                if (resumeDetails.socialMediaLinks) {
+                    resumeHTML += '<h3>Social Media Links:</h3>';
+                    resumeHTML += '<ul>';
+                    resumeDetails.socialMediaLinks.forEach(link => {
+                        resumeHTML += `<li><a href="${link.url}" target="_blank">${link.platform}</a></li>`;
+                    });
+                    resumeHTML += '</ul>';
+                }
+                // Add project links
+                if (resumeDetails.projectLinks) {
+                    resumeHTML += '<h3>Project Links:</h3>';
+                    resumeHTML += '<ul>';
+                    resumeDetails.projectLinks.forEach(link => {
+                        resumeHTML += `<li><a href="${link.url}" target="_blank">${link.name}</a></li>`;
+                    });
+                    resumeHTML += '</ul>';
+                }
+
+                resumeDetailsContainer.innerHTML = resumeHTML;
+
+                // Set the passport size photo
+                const passportPhoto = document.getElementById('passportPhoto');
+                passportPhoto.src = resumeDetails.passportPhoto; // Assuming you have stored the photo URL in localStorage
+            } else {
+                document.getElementById('resumeDetails').innerHTML = '<p>No resume details found.</p>';
+            }
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Builder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5; /* Adding a light background color */
+        }
+
+        .container {
+            max-width: 800px; /* Increased max-width for better readability */
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ddd; /* Changed border color for subtlety */
+            border-radius: 8px;
+            background-color: #fff; /* White background */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Adding a subtle shadow */
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px; /* Increased margin for better separation */
+            color: #007bff; /* Added color to heading */
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold; /* Added bold font weight */
+            color: #555; /* Added color to labels */
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px; /* Increased margin for better separation */
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box; /* Including padding and border in width calculation */
+        }
+
+        textarea {
+            min-height: 100px; /* Ensuring a minimum height for textarea */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px; /* Increased margin for better separation */
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd; /* Changed border color for subtlety */
+            text-align: left;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 12px 24px; /* Increased padding for better clickability */
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: block;
+            margin: 20px auto; /* Centering button */
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #passportPhotoPreview {
+            max-width: 100%;
+            height: auto; /* Ensuring responsive image */
+            display: block;
+            margin: 10px auto;
+            border-radius: 4px;
+        }
+
+        /* Added style for logs */
+        .log {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 4px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Resume Builder</h1>
+        <form id="resumeForm">
+            <label for="fullName">Full Name:</label>
+            <input type="text" id="fullName" name="fullName" required><br>
+
+            <label for="careerObjective">Career Objective:</label>
+            <textarea id="careerObjective" name="careerObjective" rows="4" required></textarea><br>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required><br>
+
+            <label for="phone">Phone:</label>
+            <input type="tel" id="phone" name="phone" required><br>
+
+            <label for="experience">Experience:</label>
+            <textarea id="experience" name="experience" rows="4" required></textarea><br>
+
+            <label for="technicalSkills">Technical Skills:</label>
+            <table id="technicalSkillsTable">
+                <thead>
+                    <tr>
+                        <th>Skill Name</th>
+                        <th>Proficiency</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td contenteditable="true"></td>
+                        <td>
+                            <select>
+                                <option value="beginner">Beginner</option>
+                                <option value="intermediate">Intermediate</option>
+                                <option value="pro">Pro</option>
+                            </select>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <button type="button" id="addTechnicalSkillRow">Add Skill</button><br>
+
+            <label for="personalDetails">Personal Details:</label>
+            <textarea id="personalDetails" name="personalDetails" rows="4" required></textarea><br>
+
+            <label for="projectDetails">Project Details:</label>
+            <table id="projectDetailsTable">
+                <thead>
+                    <tr>
+                        <th>Project Name</th>
+                        <th>Team Size</th>
+                        <th>Summary</th>
+                        <th>Year</th>
+                        <th>Technical Languages</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td contenteditable="true"></td>
+                        <td contenteditable="true"></td>
+                        <td contenteditable="true"></td>
+                        <td contenteditable="true"></td>
+                        <td contenteditable="true"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <button type="button" id="addProjectDetailRow">Add Project</button><br>
+
+            <h3>Education:</h3>
+            <table id="educationTable">
+                <thead>
+                    <tr>
+                        <th>Course</th>
+                        <th>Board/University</th>
+                        <th>College Name</th>
+                        <th>Grade</th>
+                        <th>Year of Passing</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td contenteditable="true"></td>
+                        <td contenteditable="true"></td>
+                        <td contenteditable="true"></td>
+                        <td contenteditable="true"></td>
+                        <td contenteditable="true"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <button type="button" id="addEducationRow">Add Education</button><br>
+
+            <label for="passportPhoto">Passport Size Photo:</label>
+            <input type="file" id="passportPhoto" name="passportPhoto" accept="image/*" required><br>
+            <img id="passportPhotoPreview" src="#" alt="Preview">
+
+            <div id="socialMediaContainer">
+                <label for="socialMedia">Social Media Links:</label>
+                <div class="socialMediaInput">
+                    <input type="text" class="socialMediaLink" name="socialMedia" required><br>
+                </div>
+            </div>
+            <button type="button" id="addSocialMediaLink">Add More Links</button><br>
+
+            <!-- Add Project Links -->
+            <label for="projectLinks">Project Links:</label>
+            <textarea id="projectLinks" name="projectLinks" rows="4" required></textarea><br>
+
+            <button type="submit">Generate Resume</button>
+        </form>
+    </div>
+
+    <div id="logs" class="log"></div>
+
+    </form>
+    </div>
+
+    <div id="logs" class="log"></div>
+        <script>
+        // Event listener for adding more social media links
+        document.getElementById('addSocialMediaLink').addEventListener('click', function() {
+            const socialMediaContainer = document.getElementById('socialMediaContainer');
+            const newSocialMediaInput = document.createElement('div');
+            newSocialMediaInput.classList.add('socialMediaInput');
+            newSocialMediaInput.innerHTML = `
+                <input type="text" class="socialMediaLink" name="socialMedia" required><br>
+            `;
+            socialMediaContainer.appendChild(newSocialMediaInput);
+
+            // Log added social media link input
+            const logContainer = document.getElementById('logs');
+            logContainer.innerHTML += "<p>Added a new social media link input</p>";
+        });
+
+        // Form submission event listener
+        document.getElementById('resumeForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Collect form field values
+            const fullName = document.getElementById('fullName').value;
+            const careerObjective = document.getElementById('careerObjective').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const experience = document.getElementById('experience').value;
+            const personalDetails = document.getElementById('personalDetails').value;
+            const educationTable = document.getElementById('educationTable');
+            const educationRows = educationTable.querySelectorAll('tbody tr');
+            const technicalSkillsTable = document.getElementById('technicalSkillsTable');
+            const technicalSkillsRows = technicalSkillsTable.querySelectorAll('tbody tr');
+            const projectDetailsTable = document.getElementById('projectDetailsTable');
+            const projectDetailsRows = projectDetailsTable.querySelectorAll('tbody tr');
+            const socialMediaLinks = document.querySelectorAll('.socialMediaLink');
+
+            // Collect social media links
+            const socialMediaLinksArray = [];
+            socialMediaLinks.forEach(link => {
+                socialMediaLinksArray.push(link.value);
+            });
+
+            // Generate HTML for education details
+            let educationHTML = '<h3>Education:</h3><table><thead><tr><th>Course</th><th>Board/University</th><th>College Name<th>Grade</th><th>Year of Passing</th></tr></thead><tbody>';
+            educationRows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                const course = cells[0].innerText.trim();
+                const board = cells[1].innerText.trim();
+                const collegeName = cells[2].innerText.trim(); // Corrected variable name
+                const grade = cells[3].innerText.trim();
+                const year = cells[4].innerText.trim();
+                educationHTML += `<tr><td>${course}</td><td>${board}</td><td>${collegeName}</td><td>${grade}</td><td>${year}</td></tr>`;
+            });
+            educationHTML += '</tbody></table>';
+
+            // Generate HTML for technical skills
+            let technicalSkillsHTML = '<h3>Technical Skills:</h3><table><thead><tr><th>Skill Name</th><th>Proficiency</th></tr></thead><tbody>';
+            technicalSkillsRows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                const skillName = cells[0].innerText.trim();
+                const proficiency = cells[1].querySelector('select').value;
+                technicalSkillsHTML += `<tr><td>${skillName}</td><td>${proficiency}</td></tr>`;
+            });
+            technicalSkillsHTML += '</tbody></table>';
+
+            // Generate HTML for project details
+            let projectDetailsHTML = '<h3>Project Details:</h3><table><thead><tr><th>Project Name</th><th>Team Size</th><th>Summary</th><th>Year</th><th>Technical Languages</th></tr></thead><tbody>';
+            projectDetailsRows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                const projectName = cells[0].innerText.trim();
+                const teamSize = cells[1].innerText.trim();
+                const summary = cells[2].innerText.trim();
+                const year = cells[3].innerText.trim();
+                const technicalLanguages = cells[4].innerText.trim();
+                projectDetailsHTML += `<tr><td>${projectName}</td><td>${teamSize}</td><td>${summary}</td><td>${year}</td><td>${technicalLanguages}</td></tr>`;
+            });
+            projectDetailsHTML += '</tbody></table>';
+
+            // Redirect to another page with resume details
+            const resumeDetails = {
+                fullName,
+                careerObjective,
+                email,
+                phone,
+                experience,
+                personalDetails,
+                educationHTML,
+                technicalSkillsHTML,
+                projectDetailsHTML,
+                socialMediaLinks: socialMediaLinksArray
+            };
+            localStorage.setItem('resumeDetails', JSON.stringify(resumeDetails));
+            window.location.href = 'resume-details.html';
+
+            // Log submission
+            const logContainer = document.getElementById('logs');
+            logContainer.innerHTML += "<p>Resume form submitted</p>";
+        });
+    </script>
+</body>
+</html>

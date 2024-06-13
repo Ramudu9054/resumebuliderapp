@@ -9,30 +9,30 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f5f5f5; /* Adding a light background color */
+            background-color: #f5f5f5;
         }
 
         .container {
-            max-width: 800px; /* Increased max-width for better readability */
+            max-width: 800px;
             margin: 50px auto;
             padding: 20px;
-            border: 1px solid #ddd; /* Changed border color for subtlety */
+            border: 1px solid #ddd;
             border-radius: 8px;
-            background-color: #fff; /* White background */
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Adding a subtle shadow */
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
         h1 {
             text-align: center;
-            margin-bottom: 20px; /* Increased margin for better separation */
-            color: #007bff; /* Added color to heading */
+            margin-bottom: 20px;
+            color: #007bff;
         }
 
         label {
             display: block;
             margin-bottom: 8px;
-            font-weight: bold; /* Added bold font weight */
-            color: #555; /* Added color to labels */
+            font-weight: bold;
+            color: #555;
         }
 
         input[type="text"],
@@ -42,37 +42,37 @@
         select {
             width: 100%;
             padding: 10px;
-            margin-bottom: 15px; /* Increased margin for better separation */
+            margin-bottom: 15px;
             border: 1px solid #ccc;
             border-radius: 4px;
-            box-sizing: border-box; /* Including padding and border in width calculation */
+            box-sizing: border-box;
         }
 
         textarea {
-            min-height: 100px; /* Ensuring a minimum height for textarea */
+            min-height: 100px;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 15px; /* Increased margin for better separation */
+            margin-bottom: 15px;
         }
 
         th, td {
             padding: 10px;
-            border: 1px solid #ddd; /* Changed border color for subtlety */
+            border: 1px solid #ddd;
             text-align: left;
         }
 
         button {
             background-color: #007bff;
             color: #fff;
-            padding: 12px 24px; /* Increased padding for better clickability */
+            padding: 12px 24px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
             display: block;
-            margin: 20px auto; /* Centering button */
+            margin: 20px auto;
         }
 
         button:hover {
@@ -81,13 +81,12 @@
 
         #passportPhotoPreview {
             max-width: 100%;
-            height: auto; /* Ensuring responsive image */
+            height: auto;
             display: block;
             margin: 10px auto;
             border-radius: 4px;
         }
 
-        /* Added style for logs */
         .log {
             margin-top: 20px;
             padding: 10px;
@@ -207,18 +206,59 @@
             <label for="projectLinks">Project Links:</label>
             <textarea id="projectLinks" name="projectLinks" rows="4" required></textarea><br>
 
-            <button type="submit">Generate Resume</button>
+            <button type="submit" id="generateResume">Generate Resume</button>
         </form>
     </div>
 
     <div id="logs" class="log"></div>
 
-    </form>
-    </div>
+    <script>
+        // Function to add a new technical skill row
+        document.getElementById('addTechnicalSkillRow').addEventListener('click', function() {
+            const table = document.getElementById('technicalSkillsTable').querySelector('tbody');
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td contenteditable="true"></td>
+                <td>
+                    <select>
+                        <option value="beginner">Beginner</option>
+                        <option value="intermediate">Intermediate</option>
+                        <option value="pro">Pro</option>
+                    </select>
+                </td>
+            `;
+            table.appendChild(newRow);
+        });
 
-    <div id="logs" class="log"></div>
-        <script>
-        // Event listener for adding more social media links
+        // Function to add a new project detail row
+        document.getElementById('addProjectDetailRow').addEventListener('click', function() {
+            const table = document.getElementById('projectDetailsTable').querySelector('tbody');
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+            `;
+            table.appendChild(newRow);
+        });
+
+        // Function to add a new education row
+        document.getElementById('addEducationRow').addEventListener('click', function() {
+            const table = document.getElementById('educationTable').querySelector('tbody');
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+            `;
+            table.appendChild(newRow);
+        });
+
+        // Function to add a new social media link
         document.getElementById('addSocialMediaLink').addEventListener('click', function() {
             const socialMediaContainer = document.getElementById('socialMediaContainer');
             const newSocialMediaInput = document.createElement('div');
@@ -237,7 +277,6 @@
         document.getElementById('resumeForm').addEventListener('submit', function(event) {
             event.preventDefault();
 
-            // Collect form field values
             const fullName = document.getElementById('fullName').value;
             const careerObjective = document.getElementById('careerObjective').value;
             const email = document.getElementById('email').value;
@@ -252,19 +291,17 @@
             const projectDetailsRows = projectDetailsTable.querySelectorAll('tbody tr');
             const socialMediaLinks = document.querySelectorAll('.socialMediaLink');
 
-            // Collect social media links
             const socialMediaLinksArray = [];
             socialMediaLinks.forEach(link => {
                 socialMediaLinksArray.push(link.value);
             });
 
-            // Generate HTML for education details
             let educationHTML = '<h3>Education:</h3><table><thead><tr><th>Course</th><th>Board/University</th><th>College Name<th>Grade</th><th>Year of Passing</th></tr></thead><tbody>';
             educationRows.forEach(row => {
                 const cells = row.querySelectorAll('td');
                 const course = cells[0].innerText.trim();
                 const board = cells[1].innerText.trim();
-                const collegeName = cells[2].innerText.trim(); // Corrected variable name
+                const collegeName = cells[2].innerText.trim();
                 const grade = cells[3].innerText.trim();
                 const year = cells[4].innerText.trim();
                 educationHTML += `<tr><td>${course}</td><td>${board}</td><td>${collegeName}</td><td>${grade}</td><td>${year}</td></tr>`;
@@ -281,7 +318,6 @@
             });
             technicalSkillsHTML += '</tbody></table>';
 
-            // Generate HTML for project details
             let projectDetailsHTML = '<h3>Project Details:</h3><table><thead><tr><th>Project Name</th><th>Team Size</th><th>Summary</th><th>Year</th><th>Technical Languages</th></tr></thead><tbody>';
             projectDetailsRows.forEach(row => {
                 const cells = row.querySelectorAll('td');
@@ -294,7 +330,6 @@
             });
             projectDetailsHTML += '</tbody></table>';
 
-            // Redirect to another page with resume details
             const resumeDetails = {
                 fullName,
                 careerObjective,
@@ -307,6 +342,7 @@
                 projectDetailsHTML,
                 socialMediaLinks: socialMediaLinksArray
             };
+
             localStorage.setItem('resumeDetails', JSON.stringify(resumeDetails));
             window.location.href = 'resume-details.html';
 
